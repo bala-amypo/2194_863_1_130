@@ -10,3 +10,4 @@ public class WarrantyClaimApplication {
         SpringApplication.run(WarrantyClaimApplication.class, args);
     }
 }
+mvn spring-boot:run -e
