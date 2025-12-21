@@ -2,13 +2,13 @@ package com.example.demo.service.impl;
 
 import com.example.demo.model.WarrantyClaimRecord;
 import com.example.demo.model.DeviceOwnershipRecord;
-import com.example.demo.model.StolenDeviceReport;
 import com.example.demo.repository.WarrantyClaimRecordRepository;
 import com.example.demo.repository.DeviceOwnershipRecordRepository;
 import com.example.demo.repository.StolenDeviceReportRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.stereotype.Service;
 import com.example.demo.service.WarrantyClaimService;
+
+import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -20,38 +20,39 @@ public class WarrantyClaimServiceImpl implements WarrantyClaimService {
     private final DeviceOwnershipRecordRepository deviceRepo;
     private final StolenDeviceReportRepository stolenRepo;
 
-    public WarrantyClaimServiceImpl(WarrantyClaimRecordRepository claimRepo,
-                                    DeviceOwnershipRecordRepository deviceRepo,
-                                    StolenDeviceReportRepository stolenRepo) {
+    public WarrantyClaimServiceImpl(
+            WarrantyClaimRecordRepository claimRepo,
+            DeviceOwnershipRecordRepository deviceRepo,
+            StolenDeviceReportRepository stolenRepo) {
+
         this.claimRepo = claimRepo;
         this.deviceRepo = deviceRepo;
         this.stolenRepo = stolenRepo;
     }
 
-    // Submit a new claim
+    // Submit a new warranty claim
+    @Override
     public WarrantyClaimRecord submitClaim(WarrantyClaimRecord claim) {
 
         // 1. Check if device exists
-        Optional<DeviceOwnershipRecord> deviceOpt = deviceRepo.findBySerialNumber(claim.getSerialNumber());
-        if (!deviceOpt.isPresent()) {
-            throw new RuntimeException("Device not found");
-        }
+        DeviceOwnershipRecord device = deviceRepo
+                .findBySerialNumber(claim.getSerialNumber())
+                .orElseThrow(() -> new RuntimeException("Device not found"));
 
-        DeviceOwnershipRecord device = deviceOpt.get();
-
-        // 2. Check if device is stolen
+        // 2. Check if device is reported stolen
         boolean isStolen = stolenRepo.existsBySerialNumber(claim.getSerialNumber());
 
         // 3. Check if warranty expired
-        boolean isExpired = device.getWarrantyExpiration() != null &&
-                device.getWarrantyExpiration().isBefore(LocalDate.now());
+        boolean isExpired = device.getWarrantyExpiration() != null
+                && device.getWarrantyExpiration().isBefore(LocalDate.now());
 
-        // 4. Check for duplicate claim
+        // 4. Check duplicate claim
         boolean isDuplicate = claimRepo.existsBySerialNumberAndClaimReason(
-                claim.getSerialNumber(), claim.getClaimReason()
+                claim.getSerialNumber(),
+                claim.getClaimReason()
         );
 
-        // 5. Determine claim status
+        // 5. Decide claim status
         if (isStolen || isExpired || isDuplicate) {
             claim.setStatus("FLAGGED");
         } else {
@@ -62,28 +63,40 @@ public class WarrantyClaimServiceImpl implements WarrantyClaimService {
         return claimRepo.save(claim);
     }
 
-    // Update claim status (ADMIN only)
+    // Update claim status (ADMIN)
+    @Override
     public WarrantyClaimRecord updateClaimStatus(Long claimId, String status) {
-        Optional<WarrantyClaimRecord> claimOpt = claimRepo.findById(claimId);
-        if (!claimOpt.isPresent()) {
-            throw new RuntimeException("Claim not found");
-        }
-        WarrantyClaimRecord claim = claimOpt.get();
+
+        WarrantyClaimRecord claim = claimRepo.findById(claimId)
+                .orElseThrow(() -> new RuntimeException("Claim not found"));
+
         claim.setStatus(status);
         return claimRepo.save(claim);
     }
 
     // Get claim by ID
+    @Override
     public Optional<WarrantyClaimRecord> getClaimById(Long id) {
         return claimRepo.findById(id);
     }
 
-    // Get claims by device serial number
+    // REQUIRED BY INTERFACE (IMPORTANT)
+    @Override
+    public WarrantyClaimRecord getBySerial(String serial) {
+        return claimRepo.findFirstBySerialNumber(serial)
+                .orElseThrow(() ->
+                        new RuntimeException("Claim not found for serial: " + serial)
+                );
+    }
+
+    // Get all claims for a serial number
+    @Override
     public List<WarrantyClaimRecord> getClaimsBySerial(String serialNumber) {
-        return claimRepo.findAllBySerialNumber(serialNumber); // Make sure this exists in repo
+        return claimRepo.findAllBySerialNumber(serialNumber);
     }
 
     // Get all claims
+    @Override
     public List<WarrantyClaimRecord> getAllClaims() {
         return claimRepo.findAll();
     }
