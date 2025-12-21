@@ -21,5 +21,14 @@ public class WarrantyClaimRecord {
 
     public WarrantyClaimRecord() {}
 
-    // getters & setters
+    // 🔹 GETTERS & SETTERS
+    public Long getId() { return id; }
+
+    public String getSerialNumber() { return serialNumber; }
+    public void setSerialNumber(String serialNumber) { this.serialNumber = serialNumber; }
+
+    public String getClaimReason() { return claimReason; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 }
