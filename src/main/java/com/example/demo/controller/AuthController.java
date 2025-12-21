@@ -1,43 +1,28 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.AuthResponse;
-import com.example.demo.dto.LoginRequest;
-import com.example.demo.dto.RegisterRequest;
 import com.example.demo.model.User;
-import com.example.demo.security.JwtTokenProvider;
 import com.example.demo.service.UserService;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
-@Tag(name = "Auth", description = "Authentication endpoints")
 public class AuthController {
 
     private final UserService userService;
-    private final JwtTokenProvider jwtTokenProvider;
 
-    public AuthController(UserService userService, JwtTokenProvider jwtTokenProvider) {
+    public AuthController(UserService userService) {
         this.userService = userService;
-        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
-        User user = userService.registerUser(request);
-        String token = jwtTokenProvider.createToken(user.getId(), user.getEmail(), user.getRoles());
-        
-        AuthResponse response = new AuthResponse(token, user.getId(), user.getEmail(), user.getRoles());
-        return ResponseEntity.ok(response);
+    public ResponseEntity<User> register(@RequestBody User user) {
+        return ResponseEntity.ok(userService.register(user));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
-        User user = userService.loginUser(request);
-        String token = jwtTokenProvider.createToken(user.getId(), user.getEmail(), user.getRoles());
-        
-        AuthResponse response = new AuthResponse(token, user.getId(), user.getEmail(), user.getRoles());
-        return ResponseEntity.ok(response);
+    public ResponseEntity<User> login(@RequestParam String email,
+                                      @RequestParam String password) {
+        return ResponseEntity.ok(userService.login(email, password));
     }
 }
