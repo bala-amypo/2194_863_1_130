@@ -2,15 +2,14 @@ package com.example.demo.repository;
 
 import com.example.demo.model.WarrantyClaimRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
-public interface WarrantyClaimRecordRepository
-        extends JpaRepository<WarrantyClaimRecord, Long> {
+@Repository
+public interface WarrantyClaimRecordRepository extends JpaRepository<WarrantyClaimRecord, Long> {
 
-    // Check duplicate claim for same device & reason
     boolean existsBySerialNumberAndClaimReason(String serialNumber, String claimReason);
 
-    // Fetch claim by serial number
-    Optional<WarrantyClaimRecord> findBySerialNumber(String serialNumber);
+    List<WarrantyClaimRecord> findAllBySerialNumber(String serialNumber); // Required method
 }
