@@ -5,14 +5,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface WarrantyClaimRecordRepository extends JpaRepository<WarrantyClaimRecord, Long> {
+public interface WarrantyClaimRecordRepository
+        extends JpaRepository<WarrantyClaimRecord, Long> {
 
     Optional<WarrantyClaimRecord> findFirstBySerialNumber(String serial);
 
-List<WarrantyClaimRecord> findAllBySerialNumber(String serialNumber);
+    List<WarrantyClaimRecord> findAllBySerialNumber(String serialNumber);
 
-boolean existsBySerialNumberAndClaimReason(String serial, String reason);
-
+    boolean existsBySerialNumberAndClaimReason(String serial, String reason);
 }
