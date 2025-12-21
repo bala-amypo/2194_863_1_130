@@ -1,13 +1,3 @@
-package com.example.demo.controller;
-
-import com.example.demo.model.FraudAlertRecord;
-import com.example.demo.service.FraudAlertService;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/fraud-alerts")
 @Tag(name = "Alert", description = "Fraud alert management")
@@ -28,8 +18,7 @@ public class FraudAlertController {
 
     @GetMapping
     public ResponseEntity<List<FraudAlertRecord>> getAllAlerts() {
-        List<FraudAlertRecord> alerts = fraudAlertService.getAllAlerts();
-        return ResponseEntity.ok(alerts);
+        return ResponseEntity.ok(fraudAlertService.getAllAlerts());
     }
 
     @GetMapping("/{id}")
@@ -41,20 +30,17 @@ public class FraudAlertController {
 
     @GetMapping("/serial/{serialNumber}")
     public ResponseEntity<List<FraudAlertRecord>> getAlertsBySerial(@PathVariable String serialNumber) {
-        List<FraudAlertRecord> alerts = fraudAlertService.getAlertsBySerial(serialNumber);
-        return ResponseEntity.ok(alerts);
+        return ResponseEntity.ok(fraudAlertService.getAlertsBySerial(serialNumber));
     }
 
     @GetMapping("/claim/{claimId}")
     public ResponseEntity<List<FraudAlertRecord>> getAlertsByClaim(@PathVariable Long claimId) {
-        List<FraudAlertRecord> alerts = fraudAlertService.getAlertsByClaim(claimId);
-        return ResponseEntity.ok(alerts);
+        return ResponseEntity.ok(fraudAlertService.getAlertsByClaim(claimId));
     }
 
     @PutMapping("/{id}/resolve")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<FraudAlertRecord> resolveAlert(@PathVariable Long id) {
-        FraudAlertRecord resolvedAlert = fraudAlertService.resolveAlert(id);
-        return ResponseEntity.ok(resolvedAlert);
+        return ResponseEntity.ok(fraudAlertService.resolveAlert(id));
     }
 }
