@@ -8,7 +8,7 @@ import com.example.demo.repository.DeviceOwnershipRecordRepository;
 import com.example.demo.repository.StolenDeviceReportRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.stereotype.Service;
-
+import com.example.demo.service.WarrantyClaimService;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
