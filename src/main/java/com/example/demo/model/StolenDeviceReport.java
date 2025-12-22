@@ -1,28 +1,35 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "stolen_device_reports")
-public class StolenDeviceReport {
+@Table(name = "device_ownership_records")
+public class DeviceOwnershipRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String serialNumber;
 
-    public StolenDeviceReport() {}
+    private String ownerName;
+    private String ownerEmail;
+    private LocalDate purchaseDate;
+    private LocalDate warrantyExpiration;
+    private Boolean active = true;
 
-    public Long getId() {
-        return id;
-    }
+    public DeviceOwnershipRecord() {}
 
-    public String getSerialNumber() {
-        return serialNumber;
-    }
+    // 🔹 GETTERS & SETTERS
+    public Long getId() { return id; }
 
-    public void setSerialNumber(String serialNumber) {
-        this.serialNumber = serialNumber;
-    }
+    public String getSerialNumber() { return serialNumber; }
+    public void setSerialNumber(String serialNumber) { this.serialNumber = serialNumber; }
+
+    public Boolean getActive() { return active; }
+    public void setActive(Boolean active) { this.active = active; }
+
+    public LocalDate getWarrantyExpiration() { return warrantyExpiration; }
 }
