@@ -1,35 +1,57 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
 
 @Entity
-@Table(name = "device_ownership_records")
-public class DeviceOwnershipRecord {
+@Table(name = "stolen_device_reports")
+public class StolenDeviceReport {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private String serialNumber;
 
-    private String ownerName;
-    private String ownerEmail;
-    private LocalDate purchaseDate;
-    private LocalDate warrantyExpiration;
-    private Boolean active = true;
+    @Column(nullable = false)
+    private String reportedBy;
 
-    public DeviceOwnershipRecord() {}
+    private String details;
 
-    // 🔹 GETTERS & SETTERS
-    public Long getId() { return id; }
+    public StolenDeviceReport() {
+    }
 
-    public String getSerialNumber() { return serialNumber; }
-    public void setSerialNumber(String serialNumber) { this.serialNumber = serialNumber; }
+    public StolenDeviceReport(String serialNumber, String reportedBy, String details) {
+        this.serialNumber = serialNumber;
+        this.reportedBy = reportedBy;
+        this.details = details;
+    }
 
-    public Boolean getActive() { return active; }
-    public void setActive(Boolean active) { this.active = active; }
+    public Long getId() {
+        return id;
+    }
 
-    public LocalDate getWarrantyExpiration() { return warrantyExpiration; }
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
+
+    public String getReportedBy() {
+        return reportedBy;
+    }
+
+    public void setReportedBy(String reportedBy) {
+        this.reportedBy = reportedBy;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
 }
