@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "stolen_device_reports")
@@ -10,25 +11,26 @@ public class StolenDeviceReport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    privatAe String serialNumber;
+    @Column(nullable = false)
+    private String serialNumber;
 
     @Column(nullable = false)
-    private String reportedBy;
+    private String reason;
 
-    private String details;
+    private LocalDateTime reportedAt;
 
+    // ✅ Default constructor
     public StolenDeviceReport() {
+        this.reportedAt = LocalDateTime.now();
     }
 
-    public StolenDeviceReport(String serialNumber, String reportedBy, String details) {
-        this.serialNumber = serialNumber;
-        this.reportedBy = reportedBy;
-        this.details = details;
-    }
-
+    // ✅ Getters and Setters
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getSerialNumber() {
@@ -39,19 +41,19 @@ public class StolenDeviceReport {
         this.serialNumber = serialNumber;
     }
 
-    public String getReportedBy() {
-        return reportedBy;
+    public String getReason() {
+        return reason;
     }
 
-    public void setReportedBy(String reportedBy) {
-        this.reportedBy = reportedBy;
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 
-    public String getDetails() {
-        return details;
+    public LocalDateTime getReportedAt() {
+        return reportedAt;
     }
 
-    public void setDetails(String details) {
-        this.details = details;
+    public void setReportedAt(LocalDateTime reportedAt) {
+        this.reportedAt = reportedAt;
     }
 }
