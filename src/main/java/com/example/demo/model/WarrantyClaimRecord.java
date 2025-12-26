@@ -1,27 +1,21 @@
-package com.example.demo.model;
-
-import jakarta.persistence.*;
-
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter @Setter
 @Entity
+@Table(name = "warranty_claim_records")
 public class WarrantyClaimRecord {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue
     private Long id;
 
     private String serialNumber;
     private String claimReason;
-    private String status;
 
-    public String getSerialNumber() {
-        return serialNumber;
-    }
+    private String status = "PENDING";
 
-    public String getClaimReason() {
-        return claimReason;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    @PrePersist
+    void onCreate() {
+        if (status == null) status = "PENDING";
     }
 }
