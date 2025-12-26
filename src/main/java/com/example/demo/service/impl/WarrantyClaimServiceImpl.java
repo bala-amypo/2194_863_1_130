@@ -3,25 +3,22 @@ package com.example.demo.service.impl;
 import com.example.demo.model.StolenDeviceReport;
 import com.example.demo.repository.StolenDeviceReportRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class WarrantyClaimServiceImpl {
 
-    private final List<StolenDeviceReport> reports = new ArrayList<>();
+    private final StolenDeviceReportRepository repository;
 
-    private StolenDeviceReportRepository reportRepository;
-
-    public WarrantyClaimServiceImpl(StolenDeviceReportRepository reportRepository) {
-        this.reportRepository = reportRepository;
+    public WarrantyClaimServiceImpl(StolenDeviceReportRepository repository) {
+        this.repository = repository;
     }
 
-    public StolenDeviceReport submitClaim(StolenDeviceReport report) {
-        reports.add(report);
-        return report;
+    public StolenDeviceReport submit(StolenDeviceReport report) {
+        return repository.save(report);
     }
 
-    public List<StolenDeviceReport> getAllClaims() {
-        return reports;
+    public List<StolenDeviceReport> getAll() {
+        return repository.findAll();
     }
 }
+ 
