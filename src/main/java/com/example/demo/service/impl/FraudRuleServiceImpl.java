@@ -1,15 +1,26 @@
-// src/main/java/com/example/demo/service/impl/FraudRuleServiceImpl.java
 package com.example.demo.service.impl;
 
-public class FraudRuleServiceImpl {
+import com.example.demo.model.FraudRule;
+import com.example.demo.repository.FraudRuleRepository;
+import com.example.demo.service.FraudRuleService;
+import java.util.ArrayList;
+import java.util.List;
 
-    // Constructor
-    public FraudRuleServiceImpl() {
-        // Initialize if needed
+public class FraudRuleServiceImpl implements FraudRuleService {
+
+    private final FraudRuleRepository repository;
+
+    public FraudRuleServiceImpl(FraudRuleRepository repository) {
+        this.repository = repository;
     }
 
-    // Example method
-    public void applyRule() {
-        System.out.println("Fraud rule applied");
+    @Override
+    public List<FraudRule> getAllRules() {
+        return repository.findAll();
+    }
+
+    @Override
+    public FraudRule addRule(FraudRule rule) {
+        return repository.save(rule);
     }
 }

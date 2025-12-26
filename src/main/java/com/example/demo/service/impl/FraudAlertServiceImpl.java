@@ -1,16 +1,25 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.model.FraudAlertRecord;
+import com.example.demo.repository.FraudAlertRecordRepository;
 import com.example.demo.service.FraudAlertService;
+import java.util.List;
 
 public class FraudAlertServiceImpl implements FraudAlertService {
 
-    // Constructor
-    public FraudAlertServiceImpl() {
-        // Initialization if needed
+    private final FraudAlertRecordRepository repository;
+
+    public FraudAlertServiceImpl(FraudAlertRecordRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public void sendAlert(String alertMessage) {
-        System.out.println("Alert sent: " + alertMessage);
+    public List<FraudAlertRecord> getAllAlerts() {
+        return repository.findAll();
+    }
+
+    @Override
+    public FraudAlertRecord addAlert(FraudAlertRecord alert) {
+        return repository.save(alert);
     }
 }
