@@ -8,7 +8,9 @@ import io.jsonwebtoken.security.Keys;
 import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.Set;
+import org.springframework.stereotype.Component;
 
+@Component
 public class JwtTokenProvider {
 
     // MUST be at least 32 characters for HS256
