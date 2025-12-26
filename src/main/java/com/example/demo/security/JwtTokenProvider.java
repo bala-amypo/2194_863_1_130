@@ -9,16 +9,17 @@ import java.util.Set;
 @Component
 public class JwtTokenProvider {
 
-    private final String SECRET_KEY = "secret-key-demo";
-    private final long EXPIRATION_TIME = 86400000; // 1 day
+    private static final String SECRET_KEY = "demo-secret";
+    private static final long EXPIRATION = 86400000;
 
     public String createToken(Long userId, String email, Set<String> roles) {
+
         Claims claims = Jwts.claims().setSubject(email);
         claims.put("userId", userId);
         claims.put("roles", roles);
 
         Date now = new Date();
-        Date expiry = new Date(now.getTime() + EXPIRATION_TIME);
+        Date expiry = new Date(now.getTime() + EXPIRATION);
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -29,19 +30,19 @@ public class JwtTokenProvider {
     }
 
     public String getEmail(String token) {
-        return getClaims(token).getSubject();
+        return parseClaims(token).getSubject();
     }
 
     public boolean validateToken(String token) {
         try {
-            getClaims(token);
+            parseClaims(token);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
             return false;
         }
     }
 
-    private Claims getClaims(String token) {
+    private Claims parseClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(SECRET_KEY)
                 .parseClaimsJws(token)
