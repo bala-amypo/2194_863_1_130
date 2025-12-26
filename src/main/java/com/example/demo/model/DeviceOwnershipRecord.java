@@ -1,26 +1,34 @@
-@Builder
+package com.example.demo.model;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDate;
+
+@Entity
+@Table(name = "device_ownership")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter @Setter
-@Entity
-@Table(name = "device_ownership_records")
+@Builder
 public class DeviceOwnershipRecord {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String serialNumber;
 
     private String ownerName;
-    private String ownerEmail;
 
-    private LocalDate warrantyExpiration;
-
-    private Boolean active = true;
+    private LocalDate purchaseDate;
 
     @PrePersist
-    void onCreate() {
-        if (active == null) active = true;
+    void created() {
+        if (purchaseDate == null) {
+            purchaseDate = LocalDate.now();
+        }
     }
 }
