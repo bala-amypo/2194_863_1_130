@@ -1,25 +1,22 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.model.StolenDevice;
-import com.example.demo.repository.StolenDeviceRepository;
-import com.example.demo.service.StolenDeviceService;
+import com.example.demo.model.StolenDeviceReport;
+import com.example.demo.repository.StolenDeviceReportRepository;
 import java.util.List;
 
-public class StolenDeviceServiceImpl implements StolenDeviceService {
+public class StolenDeviceServiceImpl {
 
-    private final StolenDeviceRepository repository;
+    private final StolenDeviceReportRepository repository;
 
-    public StolenDeviceServiceImpl(StolenDeviceRepository repository) {
+    public StolenDeviceServiceImpl(StolenDeviceReportRepository repository) {
         this.repository = repository;
     }
 
-    @Override
-    public List<StolenDevice> getAllDevices() {
-        return repository.findAll();
+    public StolenDeviceReport save(StolenDeviceReport report) {
+        return repository.save(report);
     }
 
-    @Override
-    public StolenDevice addDevice(StolenDevice device) {
-        return repository.save(device);
+    public List<StolenDeviceReport> getAll() {
+        return repository.findAll();
     }
 }
