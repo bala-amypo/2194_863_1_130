@@ -1,30 +1,18 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
-
-@Entity
-@Table(name = "stolen_device_reports")
 public class StolenDeviceReport {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private StolenDevice stolenDevice;
+    private String reportDetails;
 
-    @Column(nullable = false)
-    private String serialNumber;
+    public StolenDeviceReport() {}
 
-    @Column(nullable = false)
-    private String reason;
-
-    private LocalDateTime reportedAt;
-
-    // ✅ Default constructor
-    public StolenDeviceReport() {
-        this.reportedAt = LocalDateTime.now();
+    public StolenDeviceReport(Long id, StolenDevice stolenDevice, String reportDetails) {
+        this.id = id;
+        this.stolenDevice = stolenDevice;
+        this.reportDetails = reportDetails;
     }
 
-    // ✅ Getters and Setters
     public Long getId() {
         return id;
     }
@@ -33,27 +21,28 @@ public class StolenDeviceReport {
         this.id = id;
     }
 
-    public String getSerialNumber() {
-        return serialNumber;
+    public StolenDevice getStolenDevice() {
+        return stolenDevice;
     }
 
-    public void setSerialNumber(String serialNumber) {
-        this.serialNumber = serialNumber;
+    public void setStolenDevice(StolenDevice stolenDevice) {
+        this.stolenDevice = stolenDevice;
     }
 
-    public String getReason() {
-        return reason;
+    public String getReportDetails() {
+        return reportDetails;
     }
 
-    public void setReason(String reason) {
-        this.reason = reason;
+    public void setReportDetails(String reportDetails) {
+        this.reportDetails = reportDetails;
     }
 
-    public LocalDateTime getReportedAt() {
-        return reportedAt;
-    }
-
-    public void setReportedAt(LocalDateTime reportedAt) {
-        this.reportedAt = reportedAt;
+    @Override
+    public String toString() {
+        return "StolenDeviceReport{" +
+                "id=" + id +
+                ", stolenDevice=" + stolenDevice +
+                ", reportDetails='" + reportDetails + '\'' +
+                '}';
     }
 }
