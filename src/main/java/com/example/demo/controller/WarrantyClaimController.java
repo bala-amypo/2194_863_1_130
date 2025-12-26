@@ -1,40 +1,31 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.WarrantyClaimRecord;
+import com.example.demo.entity.WarrantyClaimRecord;
 import com.example.demo.service.WarrantyClaimService;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/claims")
+@RequestMapping("/api/warranty-claims")
 public class WarrantyClaimController {
 
-    private final WarrantyClaimService service;
-
-    public WarrantyClaimController(WarrantyClaimService service) {
-        this.service = service;
-    }
+    @Autowired
+    private WarrantyClaimService warrantyClaimService;
 
     @PostMapping
-    public ResponseEntity<WarrantyClaimRecord> submit(@RequestBody WarrantyClaimRecord claim) {
-        return ResponseEntity.ok(service.submit(claim));
+    public WarrantyClaimRecord create(@RequestBody WarrantyClaimRecord record) {
+        return warrantyClaimService.create(record);
     }
 
     @GetMapping
-    public ResponseEntity<List<WarrantyClaimRecord>> getAll() {
-        return ResponseEntity.ok(service.getAll());
+    public List<WarrantyClaimRecord> getAll() {
+        return warrantyClaimService.getAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<WarrantyClaimRecord> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(service.getById(id));
-    }
-
-    @PutMapping("/{id}/status")
-    public ResponseEntity<WarrantyClaimRecord> updateStatus(@PathVariable Long id,
-                                                            @RequestParam String status) {
-        return ResponseEntity.ok(service.updateStatus(id, status));
+    public WarrantyClaimRecord getById(@PathVariable Long id) {
+        return warrantyClaimService.getById(id);
     }
 }

@@ -1,40 +1,31 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.model.WarrantyClaimRecord;
+import com.example.demo.entity.WarrantyClaimRecord;
+import com.example.demo.repository.WarrantyClaimRecordRepository;
 import com.example.demo.service.WarrantyClaimService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@Service   // 🔴 THIS FIXES YOUR ERROR
+@Service
 public class WarrantyClaimServiceImpl implements WarrantyClaimService {
 
-    private final List<WarrantyClaimRecord> claims = new ArrayList<>();
+    @Autowired
+    private WarrantyClaimRecordRepository repository;
 
     @Override
-    public WarrantyClaimRecord submit(WarrantyClaimRecord claim) {
-        claims.add(claim);
-        return claim;
+    public WarrantyClaimRecord create(WarrantyClaimRecord record) {
+        return repository.save(record);
     }
 
     @Override
     public List<WarrantyClaimRecord> getAll() {
-        return claims;
+        return repository.findAll();
     }
 
     @Override
     public WarrantyClaimRecord getById(Long id) {
-        return claims.stream()
-                .filter(c -> c.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Claim not found"));
-    }
-
-    @Override
-    public WarrantyClaimRecord updateStatus(Long id, String status) {
-        WarrantyClaimRecord claim = getById(id);
-        claim.setStatus(status);
-        return claim;
+        return repository.findById(id).orElse(null);
     }
 }
