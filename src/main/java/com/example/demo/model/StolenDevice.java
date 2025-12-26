@@ -1,15 +1,16 @@
 package com.example.demo.model;
 
 public class StolenDevice {
+
     private Long id;
-    private String deviceId;
+    private String imei;
     private String ownerName;
 
     public StolenDevice() {}
 
-    public StolenDevice(Long id, String deviceId, String ownerName) {
+    public StolenDevice(Long id, String imei, String ownerName) {
         this.id = id;
-        this.deviceId = deviceId;
+        this.imei = imei;
         this.ownerName = ownerName;
     }
 
@@ -21,12 +22,12 @@ public class StolenDevice {
         this.id = id;
     }
 
-    public String getDeviceId() {
-        return deviceId;
+    public String getImei() {
+        return imei;
     }
 
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
+    public void setImei(String imei) {
+        this.imei = imei;
     }
 
     public String getOwnerName() {
@@ -35,14 +36,5 @@ public class StolenDevice {
 
     public void setOwnerName(String ownerName) {
         this.ownerName = ownerName;
-    }
-
-    @Override
-    public String toString() {
-        return "StolenDevice{" +
-                "id=" + id +
-                ", deviceId='" + deviceId + '\'' +
-                ", ownerName='" + ownerName + '\'' +
-                '}';
     }
 }

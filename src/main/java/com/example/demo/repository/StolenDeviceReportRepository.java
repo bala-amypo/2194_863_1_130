@@ -1,10 +1,13 @@
 package com.example.demo.repository;
 
-import com.example.demo.model.StolenDeviceReport;
+import com.example.demo.model.StolenDevice;
 import java.util.List;
 
-public interface StolenDeviceReportRepository {
-    StolenDeviceReport save(StolenDeviceReport report);
-    List<StolenDeviceReport> findAll();
-    StolenDeviceReport findById(Long id);
+public interface StolenDeviceRepository {
+
+    StolenDevice save(StolenDevice device);
+
+    List<StolenDevice> findAll();
+
+    StolenDevice findById(Long id);
 }

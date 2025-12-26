@@ -1,16 +1,17 @@
 package com.example.demo.model;
 
 public class StolenDeviceReport {
+
     private Long id;
     private StolenDevice stolenDevice;
-    private String reportDetails;
+    private String description;
 
     public StolenDeviceReport() {}
 
-    public StolenDeviceReport(Long id, StolenDevice stolenDevice, String reportDetails) {
+    public StolenDeviceReport(Long id, StolenDevice stolenDevice, String description) {
         this.id = id;
         this.stolenDevice = stolenDevice;
-        this.reportDetails = reportDetails;
+        this.description = description;
     }
 
     public Long getId() {
@@ -29,20 +30,11 @@ public class StolenDeviceReport {
         this.stolenDevice = stolenDevice;
     }
 
-    public String getReportDetails() {
-        return reportDetails;
+    public String getDescription() {
+        return description;
     }
 
-    public void setReportDetails(String reportDetails) {
-        this.reportDetails = reportDetails;
-    }
-
-    @Override
-    public String toString() {
-        return "StolenDeviceReport{" +
-                "id=" + id +
-                ", stolenDevice=" + stolenDevice +
-                ", reportDetails='" + reportDetails + '\'' +
-                '}';
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
