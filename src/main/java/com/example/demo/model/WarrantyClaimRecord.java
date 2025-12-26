@@ -1,12 +1,28 @@
-package com.example.demo.model;
+package com.example.demo.entity;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "warranty_claim_records")
 public class WarrantyClaimRecord {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String deviceId;
-    private String status;
 
-    public WarrantyClaimRecord() {}
+    private String productName;
+    private String serialNumber;
+    private String claimStatus;
+
+    public WarrantyClaimRecord() {
+    }
+
+    public WarrantyClaimRecord(Long id, String productName, String serialNumber, String claimStatus) {
+        this.id = id;
+        this.productName = productName;
+        this.serialNumber = serialNumber;
+        this.claimStatus = claimStatus;
+    }
 
     public Long getId() {
         return id;
@@ -16,19 +32,27 @@ public class WarrantyClaimRecord {
         this.id = id;
     }
 
-    public String getDeviceId() {
-        return deviceId;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    public String getStatus() {
-        return status;
+    public String getSerialNumber() {
+        return serialNumber;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
+
+    public String getClaimStatus() {
+        return claimStatus;
+    }
+
+    public void setClaimStatus(String claimStatus) {
+        this.claimStatus = claimStatus;
     }
 }
