@@ -1,13 +1,9 @@
 package com.example.demo.service;
 
+import com.example.demo.model.FraudAlertRecord;
+import java.util.List;
+
 public interface FraudAlertService {
-    void sendAlert(String alertMessage);
-}
-
-public interface FraudRuleService {
-    void applyRule(String ruleName);
-}
-
-public interface StolenDeviceService {
-    void reportDevice(String deviceId);
+    List<FraudAlertRecord> getAllAlerts();
+    FraudAlertRecord addAlert(FraudAlertRecord alert);
 }
