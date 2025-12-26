@@ -3,15 +3,17 @@ package com.example.demo.model;
 public class StolenDeviceReport {
 
     private Long id;
-    private StolenDevice stolenDevice;
-    private String description;
+    private String deviceImei;
+    private String ownerName;
+    private String reportStatus;
 
     public StolenDeviceReport() {}
 
-    public StolenDeviceReport(Long id, StolenDevice stolenDevice, String description) {
+    public StolenDeviceReport(Long id, String deviceImei, String ownerName, String reportStatus) {
         this.id = id;
-        this.stolenDevice = stolenDevice;
-        this.description = description;
+        this.deviceImei = deviceImei;
+        this.ownerName = ownerName;
+        this.reportStatus = reportStatus;
     }
 
     public Long getId() {
@@ -22,19 +24,27 @@ public class StolenDeviceReport {
         this.id = id;
     }
 
-    public StolenDevice getStolenDevice() {
-        return stolenDevice;
+    public String getDeviceImei() {
+        return deviceImei;
     }
 
-    public void setStolenDevice(StolenDevice stolenDevice) {
-        this.stolenDevice = stolenDevice;
+    public void setDeviceImei(String deviceImei) {
+        this.deviceImei = deviceImei;
     }
 
-    public String getDescription() {
-        return description;
+    public String getOwnerName() {
+        return ownerName;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
+
+    public String getReportStatus() {
+        return reportStatus;
+    }
+
+    public void setReportStatus(String reportStatus) {
+        this.reportStatus = reportStatus;
     }
 }
