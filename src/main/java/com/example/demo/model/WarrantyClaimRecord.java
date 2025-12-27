@@ -1,60 +1,33 @@
-package com.example.demo.entity;
+package com.example.demo.model;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "warranty_claim_records")
 public class WarrantyClaimRecord {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
     private String serialNumber;
-
-    @Column(nullable = false)
     private String claimantName;
-
-    @Column(nullable = false)
     private String claimantEmail;
-
-    @Column(nullable = false)
     private String claimReason;
-
-    @Column(nullable = false)
     private LocalDateTime submittedAt;
-
-    @Column(nullable = false)
     private String status; // PENDING / APPROVED / REJECTED / FLAGGED
 
-    // ✅ Default values before insert
-    @PrePersist
-    public void prePersist() {
-        this.submittedAt = LocalDateTime.now();
-        if (this.status == null) {
-            this.status = "PENDING";
-        }
-    }
-
-    // 🔹 Constructors
     public WarrantyClaimRecord() {
+        this.submittedAt = LocalDateTime.now();
+        this.status = "PENDING";
     }
 
     public WarrantyClaimRecord(Long id, String serialNumber, String claimantName,
-                               String claimantEmail, String claimReason,
-                               LocalDateTime submittedAt, String status) {
+                               String claimantEmail, String claimReason, String status) {
         this.id = id;
         this.serialNumber = serialNumber;
         this.claimantName = claimantName;
         this.claimantEmail = claimantEmail;
         this.claimReason = claimReason;
-        this.submittedAt = submittedAt;
-        this.status = status;
+        this.submittedAt = LocalDateTime.now();
+        this.status = (status == null) ? "PENDING" : status;
     }
 
-    // 🔹 Getters & Setters
     public Long getId() {
         return id;
     }
