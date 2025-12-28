@@ -4,11 +4,13 @@ import com.example.demo.model.FraudRule;
 import com.example.demo.service.FraudRuleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+
 
 import java.util.List;
 
 @RestController
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasRole('USER')")
 @RequestMapping("/api/fraud-rules")
 public class FraudRuleController {
     
